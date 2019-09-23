@@ -54,12 +54,36 @@ docker run -it --rm --name postgres  -p 5432:5432 -e POSTGRES_USER=planmatch -e 
 ----
 run application
 ----
-Run this springboot app from PlanMatchService.
+Run this as springboot app
 
 ----
 verify
 ----
+Check the console log to see your commands and queries in action. 
 
+2019-09-23 13:09:00.013 DEBUG 5200 --- [main] com.example.match.client.DomainService   : issuing create command
+2019-09-23 13:09:00.201  INFO 5200 --- [.match.query]-0] o.a.e.TrackingEventProcessor             : Using current Thread for last segment worker: TrackingSegmentWorker{processor=com.example.match.query, segment=Segment[0/0]}
+2019-09-23 13:09:00.213  INFO 5200 --- [.match.query]-0] o.a.e.TrackingEventProcessor             : Fetched token: null for segment: Segment[0/0]
+2019-09-23 13:09:00.225  INFO 5200 --- [.match.query]-0] o.a.a.c.event.axon.AxonServerEventStore  : open stream: 0
+Security framework of XStream not initialized, XStream is probably vulnerable.
+2019-09-23 13:09:00.350 DEBUG 5200 --- [mmandReceiver-0] com.example.match.command.Inquiry        : handling cmd InquiryCreateCommand(id=d6a323cc-fd78-425a-9825-a3032c6998b8, firstName=simar, status=create)
+2019-09-23 13:09:00.355 DEBUG 5200 --- [mmandReceiver-0] com.example.match.command.Inquiry        : applying evt InquiryCreatedEvent(id=d6a323cc-fd78-425a-9825-a3032c6998b8, firstName=simar, status=create)
+2019-09-23 13:09:00.545 DEBUG 5200 --- [.match.query]-0] c.e.match.query.InquirySummaryProjector  : projecting evt InquiryCreatedEvent(id=d6a323cc-fd78-425a-9825-a3032c6998b8, firstName=simar, status=create)
+2019-09-23 13:09:00.570 DEBUG 5200 --- [main] com.example.match.client.DomainService   : issuing score command
+2019-09-23 13:09:00.619 DEBUG 5200 --- [mmandReceiver-1] com.example.match.command.Inquiry        : applying evt InquiryCreatedEvent(id=d6a323cc-fd78-425a-9825-a3032c6998b8, firstName=simar, status=create)
+2019-09-23 13:09:00.622 DEBUG 5200 --- [mmandReceiver-1] com.example.match.command.Inquiry        : handling cmd InquiryScoreCommand(id=d6a323cc-fd78-425a-9825-a3032c6998b8, score=5, status=complete)
+2019-09-23 13:09:00.623 DEBUG 5200 --- [mmandReceiver-1] com.example.match.command.Inquiry        : applying evt InquiryScoredEvent(id=d6a323cc-fd78-425a-9825-a3032c6998b8, score=5, status=complete)
+2019-09-23 13:09:00.644 DEBUG 5200 --- [.match.query]-0] c.e.match.query.InquirySummaryProjector  : projecting evt InquiryScoredEvent(id=d6a323cc-fd78-425a-9825-a3032c6998b8, score=5, status=complete)
+2019-09-23 13:09:00.660 DEBUG 5200 --- [main] com.example.match.client.DomainService   : querying inquiry
+2019-09-23 13:09:00.744 DEBUG 5200 --- [main] com.example.match.client.DomainService   : inquiry queried InquirySummaryView(id=d6a323cc-fd78-425a-9825-a3032c6998b8, firstName=simar, initialState=create, currentState=complete, score=5)
+
+                  yuhu 
+
+Some other tests will help gain better understanding.
+Try to issue command in following different scenarios.
+1. firstName is 'invalid'
+2. score is 0 or less
+  
 ----
 Summary
 ----
