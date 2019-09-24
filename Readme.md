@@ -87,4 +87,7 @@ Try to issue command in following different scenarios.
 ----
 Summary
 ----
-Congratulations on spinning up your microservices with AXON stack. 
+Congratulations on spinning up your microservices with AXON stack.
+
+More information can be found here: 
+https://medium.com/@bawa.simar/building-microservices-by-applying-ddd-cqrs-and-event-sourcing-on-axon-java-sprint-boot-platform-2e12289b8a2b
